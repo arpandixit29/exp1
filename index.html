@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+            --border-color: #d1d5db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        input {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        /* HTML5 Validation Visual Feedback */
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        input:not(:placeholder-shown):invalid {
+            border-color: var(--error-color);
+        }
+
+        input:not(:placeholder-shown):valid {
+            border-color: var(--success-color);
+        }
+
+        .error-message {
+            font-size: 0.75rem;
+            color: var(--error-color);
+            display: none;
+        }
+
+        input:invalid + .error-message {
+            display: block;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .success-box {
+            display: none;
+            background-color: #ecfdf5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Student Registration</h1>
+            <p>Please fill out the form to enroll.</p>
+        </header>
+
+        <form id="registrationForm">
+            <!-- Name Input: Required, pattern for alphabets -->
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName" 
+                    placeholder="John Doe" 
+                    required 
+                    minlength="3"
+                    pattern="^[A-Za-z\s]+$"
+                    title="Name should only contain letters and spaces.">
+                <span class="error-message">Please enter at least 3 letters (letters only).</span>
+            </div>
+
+            <!-- Email Input: Required, type email -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="john@example.com" 
+                    required>
+                <span class="error-message">Please enter a valid email address.</span>
+            </div>
+
+            <!-- Age Input: Required, numeric range -->
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input 
+                    type="number" 
+                    id="age" 
+                    name="age" 
+                    placeholder="18" 
+                    min="16" 
+                    max="100" 
+                    required>
+                <span class="error-message">Age must be between 16 and 100.</span>
+            </div>
+
+            <button type="submit">Register Student</button>
+        </form>
+
+        <div id="successMessage" class="success-box">
+            Registration submitted successfully!
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const successBox = document.getElementById('successMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // If the browser validation passes
+            if (form.checkValidity()) {
+                successBox.style.display = 'block';
+                form.reset();
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    successBox.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
